@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About - SkinGuardian</title>
+  <!-- Tailwind CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* Custom font family */
+    .font-poppins {
+      font-family: "Poppins", sans-serif;
+    }
+
+    /* Gradient + wave background (same style as index) */
+    .hero-wave {
+      /* First, a linear gradient from top-left to bottom-right */
+      background: linear-gradient(135deg, #4774c7 0%, #4774c7 100%);
+      /* Then overlay the wave SVG */
+      background-image:
+        linear-gradient(135deg, #b540cc 0%, #4774c7 100%),
+        url('https://raw.githubusercontent.com/gist/microsoft92/5c4c5980216f9f62456fab9f0f84abdf/raw/7a4febb20f14ab0a275f704a3696c50a09959416/wave.svg');
+      background-repeat: no-repeat;
+      background-position: bottom;
+      background-size: cover;
+    }
+  </style>
+</head>
+<body class="font-poppins bg-gray-50 flex flex-col min-h-screen">
+  <!-- Navbar -->
+  <nav class="bg-white shadow">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="text-2xl font-bold text-gray-800">
+        {{ brand_name }}
+      </div>
+      <div class="space-x-6 hidden md:block">
+        <a href="/" class="text-gray-700 hover:text-green-600 transition">Home</a>
+        <a href="/about" class="text-gray-700 hover:text-green-600 transition">About</a>
+        <a href="/contact" class="text-gray-700 hover:text-green-600 transition">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section: Gradient + Wave -->
+  <header class="relative hero-wave text-white pt-16 pb-32 overflow-hidden">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
+        About SkinGuardian
+      </h1>
+      <p class="md:text-lg text-gray-100 max-w-2xl mx-auto">
+        Learn about our mission, our technology, and how we strive to make
+        healthcare accessible for everyone.
+      </p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow relative bg-gray-50 -mt-24 z-10">
+    <div class="container mx-auto px-4 py-10 bg-white rounded-lg shadow-lg">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+        Our Mission
+      </h2>
+      <p class="text-gray-700 leading-relaxed mb-6">
+        SkinGuardian is a cutting-edge AI-powered platform dedicated to early
+        skin cancer detection. Our mission is to provide fast, private, and fair
+        healthcare solutions to people worldwide.
+      </p>
+
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+        How It Works
+      </h2>
+      <p class="text-gray-700 leading-relaxed">
+        We leverage Qualcomm’s on-device technologies, ensuring user data remains
+        secure. All computations are performed right on your device, eliminating
+        the need for costly and sometimes insecure cloud-based servers. Our
+        model’s accuracy is constantly improving through responsible AI practices
+        and diverse training data.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white shadow mt-16">
+    <div class="container mx-auto px-4 py-6 text-center text-gray-600 text-sm">
+      &copy; {{ year|default("2025") }} {{ brand_name }}. All rights reserved.
+    </div>
+  </footer>
+</body>
+</html>
