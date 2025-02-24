@@ -2,3 +2,4 @@ flask==2.2.3
 onnxruntime>=1.17.0
 numpy>=1.24.0
 pillow
+gunicorn
