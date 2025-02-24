@@ -8,3 +8,4 @@ fine_tuned_beit_best/
 fine_tuned_beit/
 beit_finetuned_model.onnx
 .conda/
+FlaskApp/
