@@ -1,5 +1,4 @@
-flask
-onnxruntime>=1.17.0
-numpy>=1.24.0
-pillow
-gunicorn
+flask==2.2.3
+onnxruntime==1.14.1
+numpy==1.23.5
+pillow==9.4.0
