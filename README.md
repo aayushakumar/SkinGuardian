@@ -96,4 +96,42 @@ If you want to package the app into a Windows executable:
 
 This project is for educational and research purposes. Not intended for medical diagnosis or treatment.
 
+---
+
+### 🔹 **Git Large File Storage (LFS) for Model File**
+Since the ONNX model file is large, it should be tracked using **Git LFS** to prevent repository size issues.
+
+#### **How to Use Git LFS**
+1. **Install Git LFS** (if not already installed):
+   ```bash
+   git lfs install
+   ```
+2. **Track the ONNX model file**:
+   ```bash
+   git lfs track "*.onnx"
+   ```
+3. **Commit and push** your changes:
+   ```bash
+   git add .gitattributes
+   git add beit_finetuned_model.onnx
+   git commit -m "Added ONNX model with LFS"
+   git push origin main
+   ```
+
+---
+
+### 🏆 **Why Choose SkinGuardian?**
+🔹 **Runs Completely On-Device** – No internet dependency, ensuring privacy  
+🔹 **Optimized for Qualcomm Hardware** – Fast, efficient execution on Snapdragon-powered devices  
+🔹 **User-Friendly** – Drag-and-drop image upload, intuitive web-based UI  
+🔹 **AI-Powered Precision** – Fine-tuned BEIT model ensures high accuracy in classification  
+
+---
+
+### 📢 **Upcoming Features**
+🚀 **Mobile App Version** (Android/iOS)  
+🖼️ **Heatmap Visualization** (Grad-CAM for interpretability)  
+📊 **Detailed Probability Report** (Confidence scores for multiple lesion types)  
+📩 **Exportable Reports** (PDF format for doctors/patients)  
+
 **Developed for the Qualcomm AI Hackathon** 🏆 🚀
