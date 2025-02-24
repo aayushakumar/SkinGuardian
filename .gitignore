@@ -3,3 +3,4 @@ classified_images/
 tester.ipynb
 beit_feature_extractor/
 beit_model/
+Beit.onnx
