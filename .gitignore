@@ -4,3 +4,6 @@ tester.ipynb
 beit_feature_extractor/
 beit_model/
 Beit.onnx
+fine_tuned_beit_best/
+fine_tuned_beit/
+beit_finetuned_model.onnx
