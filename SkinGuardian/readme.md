@@ -1,124 +1,99 @@
 
+# 🛡️ SkinGuardian - AI-Powered Skin Cancer Detection
 
-
-# 🛡️ SkinGuardian++  
-### A Fair, Explainable, Private, and Robust AI System for Early Skin Cancer Detection  
-
-## 📌 Project Overview  
-**SkinGuardian++** is an AI-powered desktop application for **early skin cancer detection** with a strong emphasis on **Socially Responsible AI (SRAI)**. It ensures:  
-✅ **Fairness** - Bias mitigation across diverse skin tones.  
-✅ **Explainability** - Transparent AI decisions using SHAP, Grad-CAM, and LIME.  
-✅ **Privacy** - On-device inference using **Federated Learning** to protect sensitive data.  
-✅ **Robustness** - Defense against adversarial attacks and real-world noise.  
+**SkinGuardian** is an AI-driven desktop application that enables **early skin cancer detection** using a fine-tuned **Beit model** from Qualcomm AI Hub. It runs entirely **on-device** with **ONNX Runtime**, ensuring **privacy, speed, and efficiency**. No internet connection is required once installed.
 
 ---
-## 🛠️ Setup Instructions  
 
-### 1️⃣ **Clone the Repository**  
-```bash
-git clone https://github.com/aayushakumar/SkinGuardian.git
-cd SkinGuardian
-```
+## 🚀 Features
 
-### 2️⃣ **Create and Activate a Virtual Environment**  
-```bash
-# For Windows
-python -m venv venv
-venv\Scripts\activate
+✔ **AI-powered early detection**  
+✔ **On-device inference** (No cloud dependency)  
+✔ **Fast and private analysis**  
+✔ **User-friendly interface** with drag-and-drop upload  
+✔ **Simple one-click execution** (Windows EXE available)  
+✔ **Qualcomm AI Hub Model - BEIT** fine-tuned for skin lesion classification  
 
-# For macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 3️⃣ **Install Dependencies**  
-```bash
-pip install -r requirements.txt
-```
-
-### 4️⃣ **Run the Application**  
-```bash
-python app.py
-```
 ---
 
-## 🌿 **Branching Workflow**  
+## 🛠️ Installation
 
-We follow a structured **Git branching strategy**:  
-```
-- main  (Stable version - NO changes required here)
-  ├── dev  (Development branch - All features merge here!)
-      ├── fairness-module  (Bias mitigation)
-      ├── explainability-module  (SHAP, Grad-CAM)
-      ├── robustness-module  (Adversarial attacks)
-```
-
-### **🛠️ How to Work on a Feature**  
-1. **Checkout `dev` branch**  
+### **Option 1: Run from Source (Requires Python 3.9+)**
+1. **Install dependencies**:
    ```bash
-   git checkout dev
-   git pull origin dev  # Get the latest updates
+   pip install -r requirements.txt
    ```
-2. **Go to your feature branch**  
-   ```bash
-   git checkout feature-name
-   ```
- - **(feature-name:fairness-module, explainability-module, robustness-module)**
+2. **Ensure your model file is in the correct directory**:
+   - Place `beit_finetuned_model.onnx` in the same folder as `app.py`.
 
-3. **Make changes, then commit**  
+3. **Run the application**:
    ```bash
-   git add .
-   git commit -m "Added xyz feature module"
+   python app.py
    ```
-4. **Push your changes to GitHub**  
-   ```bash
-   git push origin feature-name
-   ```
+4. **Access the web interface**:
+   - Open your browser and go to **[http://127.0.0.1:5000](http://127.0.0.1:5000)**.
 
 ---
 
-## 🔁 **Pull Request (PR) Guidelines**  
-
-**All feature branches must be merged into `dev` via a Pull Request (PR).**  
-
-### **Creating a Pull Request (PR)**
-1. Push your branch to GitHub:  
-   ```bash
-   git push origin feature-name
+### **Option 2: Run as a Standalone EXE (No Python Needed)**
+1. **Download** the pre-built EXE from `dist/app.exe` (or build it yourself using PyInstaller).
+2. **Double-click** `app.exe` to start the application.
+3. **On your browser open the app** at:
    ```
-2. Go to the **GitHub repo** → **Pull Requests** → **New Pull Request**.  
-3. Select **`base branch: dev`** and **`compare branch: feature-name`**.  
-4. Add a **descriptive PR title** and **detailed description**.  
-5. Submit the PR and request a review.  
-6. **Once approved, merge the PR into `dev`**.  
+   http://127.0.0.1:5000
+   ```
+4. **Upload an image** and receive an AI-based analysis.
 
 ---
 
-## 🔐 **Branch Protection Rules**
-To ensure stability:  
-🔹 **All team members must merge their feature branches into `dev` via PRs**.  
-🔹 **Merging to `main` requires an approved PR from `dev`**.  
+## 🏗️ How to Build an Executable (`.exe`) Using PyInstaller
+
+If you want to package the app into a Windows executable:
+
+1. **Install PyInstaller**:
+   ```bash
+   pip install pyinstaller
+   ```
+2. **Run the following command** to create a standalone EXE:
+   ```bash
+   pyinstaller --onefile --noconsole app.py
+   ```
+3. **Find the EXE in the `dist/` folder**:
+   - Run `dist/app.exe` to launch the application.
 
 ---
 
-## 📋 **Git Commands Reference**
-💡 Commonly used Git commands:
+## 🧠 AI Model Information
 
-| Action | Command |
-|---------|---------|
-| Clone the repo | `git clone <repo_url>` |
-| Create a new branch | `git checkout -b branch-name` |
-| Switch branches | `git checkout branch-name` |
-| Update local branch | `git pull origin branch-name` |
-| Stage changes | `git add .` |
-| Commit changes | `git commit -m "Your message"` |
-| Push to remote | `git push origin branch-name` |
-| Fetch latest changes | `git fetch origin` |
-| Merge changes | `git merge branch-name` |
-| Delete a branch (local) | `git branch -d branch-name` |
-| Delete a branch (remote) | `git push origin --delete branch-name` |
+- **Model**: Fine-tuned **Beit** from **Qualcomm AI Hub**  
+- **Framework**: ONNX Runtime  
+- **Input Size**: `224x224` pixels (RGB)  
+- **Inference Output**: Binary classification (Cancerous vs. Non-Cancerous)  
+- **Probability Scores**: AI model provides confidence levels for each prediction  
 
 ---
 
-## 📢 **Need Help?**
-If you have any issues, reach out to the team or create an **Issue** in the GitHub repository.  
+## 🖥️ Project Structure
+
+```
+/SkinGuardian
+│── app.py                # Main Flask application
+│── beit_finetuned_model.onnx  # AI model file 
+│── requirements.txt       # Required dependencies
+│── README.md              # Documentation
+│── /templates             # HTML templates for UI
+│   ├── index.html
+│   ├── result.html
+│   ├── about.html
+│   └── contact.html
+│── /dist                  # (Generated) Executable file after PyInstaller build
+│── app.spec               # PyInstaller configuration
+```
+
+---
+
+## 📜 License
+
+This project is for educational and research purposes. Not intended for medical diagnosis or treatment.
+
+**Developed for the Qualcomm AI Hackathon** 🏆 🚀
