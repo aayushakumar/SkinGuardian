@@ -134,6 +134,7 @@ Since the ONNX model file is large, it should be tracked using **Git LFS** to pr
 📊 **Detailed Probability Report** (Confidence scores for multiple lesion types)  
 📩 **Exportable Reports** (PDF format for doctors/patients)  
 
-**Developed for the Qualcomm AI Hackathon** 🏆 🚀 - [Check here!](https://devpost.com/software/skinguardian)
+- **Developed for the Qualcomm AI Hackathon** 🏆 🚀 - [Check here!](https://devpost.com/software/skinguardian) 
+- **Check out detailed information about SkinGuardian**  🚀 - [Check here!](https://deepwiki.com/aayushakumar/SkinGuardian)
 
 
