@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Explainability – SkinGuardian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    .bg-skinguardian { background-color: #47c299; }
+    .font-poppins   { font-family: "Poppins", sans-serif; }
+  </style>
+</head>
+<body class="font-poppins bg-gray-50 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="text-2xl font-bold text-gray-800">{{ brand_name }}</div>
+      <div class="space-x-6 hidden md:block">
+        <a href="/"        class="text-gray-700 hover:text-skinguardian">Home</a>
+        <a href="/about"   class="text-gray-700 hover:text-skinguardian">About</a>
+        <a href="/contact" class="text-gray-700 hover:text-skinguardian">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="container mx-auto p-6 flex-grow">
+    <div class="flex flex-col md:flex-row gap-8">
+
+      <!-- Analysis Result -->
+      <div class="md:w-1/3">
+        <div class="bg-white p-6 rounded-lg shadow text-center transform hover:scale-105 transition">
+          <h2 class="text-2xl font-extrabold mb-4">Analysis Result</h2>
+          {% if result=='Positive' %}
+            <div class="text-red-500 mb-4">
+              <svg class="mx-auto w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd"
+                      d="M12 2c-.6 0-1.15.34-1.42.88l-8 14A1.5 1.5 0 0 0 4 19.5h16a1.5 1.5 0 0 0 1.42-2.12l-8-14A1.5 1.5 0 0 0 12 2Zm0 14a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm-1-8a1 1 0 0 1 2 0v5a1 1 0 0 1-2 0V8Z"
+                      clip-rule="evenodd"/>
+              </svg>
+            </div>
+          {% else %}
+            <div class="text-green-500 mb-4">
+              <svg class="mx-auto w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2l4 -4"/>
+              </svg>
+            </div>
+          {% endif %}
+          <p class="text-lg">Our AI model indicates: <span class="font-bold text-skinguardian">{{ result }}</span></p>
+          {% if result=='Positive' %}
+            <p class="mt-2 text-lg">Probability of cancer: <span class="font-bold text-red-500">{{ (prob*100)|round(2) }}%</span></p>
+          {% else %}
+            <p class="mt-2 text-lg">Confidence you are safe: <span class="font-bold text-green-500">{{ ((1-prob)*100)|round(2) }}%</span></p>
+          {% endif %}
+          <p class="mt-4 text-sm text-gray-500">* Not a medical diagnosis. Consult a healthcare professional.</p>
+          <a href="/" class="mt-6 block bg-skinguardian text-white py-2 rounded hover:opacity-90 transition">New Analysis</a>
+        </div>
+      </div>
+
+      <!-- Explainability Cards -->
+      <div class="md:w-2/3 flex flex-col space-y-6 w-full">
+
+        <!-- Grad-CAM -->
+        <div class="max-w-4xl mx-auto bg-white px-4 pt-4 pb-2 rounded-lg shadow">
+          <h3 class="font-semibold text-lg text-center mb-4">Grad-CAM</h3>
+          <div class="grid grid-cols-2 gap-4 justify-items-center items-start">
+            <img src="{{ url_for('static', filename=gradcam) }}"
+                 alt="Grad-CAM heatmap"
+                 class="w-full h-96 object-contain rounded"/>
+            <img src="{{ url_for('static', filename=gradcam_grid) }}"
+                 alt="Grad-CAM hotspot outline"
+                 class="w-full h-96 object-contain rounded border"/>
+            <div class="text-sm text-gray-600 text-center">
+              <div class="w-24 h-2 rounded-full bg-gradient-to-r from-red-500 via-yellow-400 to-blue-500 mx-auto mb-2"></div>
+              <p>🔴 Red = Most important</p>
+              <p>🔵 Blue = Least important</p>
+            </div>
+            <div class="text-sm text-gray-700 text-center space-y-1">
+              <p>◆ Top {{ gradcam_metrics.top_percentile }}ᵗʰ-percentile regions cover <strong>{{ gradcam_metrics.area_fraction }}%</strong> of the image.</p>
+              <p>◆ These hotspots align with the lesion’s irregular border—often a malignancy cue.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Occlusion Map -->
+        <div class="max-w-4xl mx-auto bg-white px-4 pt-4 pb-2 rounded-lg shadow">
+          <h3 class="font-semibold text-lg text-center mb-4">Occlusion Map</h3>
+          <div class="grid grid-cols-2 gap-4 justify-items-center items-start">
+            <img src="{{ url_for('static', filename=occlusion) }}"
+                 alt="Occlusion heatmap"
+                 class="w-full h-96 object-contain rounded"/>
+            <img src="{{ url_for('static', filename=occlusion_grid) }}"
+                 alt="Occlusion critical patches"
+                 class="w-full h-96 object-contain rounded border"/>
+            <div class="text-sm text-gray-600 text-center">
+              <div class="w-24 h-2 rounded-full bg-gradient-to-r from-red-600 via-green-400 to-blue-500 mx-auto mb-2"></div>
+              <p>🔴 Red = High impact (confidence drop)</p>
+              <p>🟢 Green = Moderate effect</p>
+              <p>🔵 Blue = Minimal impact</p>
+            </div>
+            <div class="text-sm text-gray-700 text-center space-y-1">
+              <p>◆ Top-3 patches & Δconfidence:</p>
+              <ul class="list-disc list-inside ml-4">
+                {% for drop, y, x in occlusion_top3 %}
+                  <li>Patch at ({{ y }}, {{ x }}) → Δ = {{ (drop*100)|round(2) }}%</li>
+                {% endfor %}
+              </ul>
+              <p>◆ Blocking these areas most reduces the model’s certainty.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- LIME -->
+        <div class="max-w-4xl mx-auto bg-white px-4 pt-4 pb-2 rounded-lg shadow">
+          <h3 class="font-semibold text-lg text-center mb-4">LIME</h3>
+          <div class="grid grid-cols-2 gap-4 justify-items-center items-start">
+            <img src="{{ url_for('static', filename=lime) }}"
+                 alt="LIME overlay"
+                 class="w-full h-96 object-contain rounded"/>
+            <img src="{{ url_for('static', filename=lime_grid) }}"
+                 alt="LIME superpixel grid"
+                 class="w-full object-contain rounded "/>
+            <div class="text-sm text-gray-600 text-center">
+              <div class="w-24 h-2 rounded-full bg-red-500 mx-auto mb-2"></div>
+              <p>🔴 Red = Regions that supported the prediction</p>
+            </div>
+            <div class="text-sm text-gray-700 text-center space-y-1">
+              <p>◆ Top-3 superpixels:</p>
+              <ul class="list-disc list-inside ml-4">
+                {% for feat in lime_metrics %}
+                  <li>Superpixel {{ feat.id }} → weight = {{ feat.weight }}</li>
+                {% endfor %}
+              </ul>
+              <p>◆ These regions had the strongest positive influence.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white shadow py-6 mt-10">
+    <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
+      &copy; {{ year|default("2025") }} {{ brand_name }}. All rights reserved.
+    </div>
+  </footer>
+</body>
+</html>

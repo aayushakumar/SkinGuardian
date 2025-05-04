@@ -4,16 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SkinGuardian - Analysis Result</title>
-  <!-- Tailwind CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-    rel="stylesheet"
-  />
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <style>
     .bg-skinguardian {
       background-color: #47c299;
@@ -28,65 +20,36 @@
   <!-- Navbar -->
   <nav class="bg-white shadow">
     <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-      <div class="text-2xl font-bold text-gray-800">
-        {{ brand_name }}
-      </div>
+      <div class="text-2xl font-bold text-gray-800">{{ brand_name }}</div>
       <div class="space-x-6 hidden md:block">
-        <a href="/about" class="text-gray-700 hover:text-skinguardian transition">
-          About
-        </a>
-        <a href="/contact" class="text-gray-700 hover:text-skinguardian transition">
-          Contact
-        </a>
+        <a href="/about" class="text-gray-700 hover:text-skinguardian transition">About</a>
+        <a href="/contact" class="text-gray-700 hover:text-skinguardian transition">Contact</a>
       </div>
     </div>
   </nav>
 
-  <!-- Main Content: Result Section -->
+  <!-- Main Content -->
   <main class="flex-grow">
-    <div class="container mx-auto px-4 py-10">
+    <div class="container mx-auto px-4 py-10 relative z-10">
       <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8 text-center">
-        <h2 class="text-3xl font-extrabold text-gray-800 mb-4">
-          Analysis Result
-        </h2>
+        <h2 class="text-3xl font-extrabold text-gray-800 mb-4">Analysis Result</h2>
 
-        <!-- Icon Based on Result -->
+        <!-- Icon -->
         {% if result == 'Positive' %}
-          <!-- Red Warning Icon -->
-          <div class="text-red-500 mx-auto mb-4">
-            <svg
-              class="mx-auto w-16 h-16"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M12 2c-.6 0-1.15.34-1.42.88l-8 14A1.5 1.5 0 0 0 4 19.5h16a1.5 1.5 0 0 0 1.42-2.12l-8-14A1.5 1.5 0 0 0 12 2Zm0 14a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm-1-8a1 1 0 0 1 2 0v5a1 1 0 0 1-2 0V8Z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </div>
+        <div class="text-red-500 mx-auto mb-4">
+          <svg class="mx-auto w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" d="M12 2c-.6 0-1.15.34-1.42.88l-8 14A1.5 1.5 0 0 0 4 19.5h16a1.5 1.5 0 0 0 1.42-2.12l-8-14A1.5 1.5 0 0 0 12 2Zm0 14a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm-1-8a1 1 0 0 1 2 0v5a1 1 0 0 1-2 0V8Z" clip-rule="evenodd" />
+          </svg>
+        </div>
         {% else %}
-          <!-- Green Check Icon -->
-          <div class="text-green-500 mx-auto mb-4">
-            <svg
-              class="mx-auto w-16 h-16"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12l2 2l4 -4"
-              />
-            </svg>
-          </div>
+        <div class="text-green-500 mx-auto mb-4">
+          <svg class="mx-auto w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2l4 -4" />
+          </svg>
+        </div>
         {% endif %}
 
+        <!-- Text -->
         <p class="text-lg text-gray-700 mb-6">
           Our AI model indicates:
           <span class="font-bold text-skinguardian">{{ result }}</span>
@@ -97,40 +60,37 @@
           If "Negative", show "Confidence you are safe: X%"
         -->
         {% if result == 'Positive' %}
-          <p class="text-lg text-gray-700 mb-6">
-            Probability of cancer: 
-            <span class="font-bold text-red-500">
-              {{ (prob * 100) | round(2) }}%
-            </span>
-          </p>
+        <p class="text-lg text-gray-700 mb-6">
+          Probability of cancer:
+          <span class="font-bold text-red-500">{{ prob }}</span>
+        </p>
         {% else %}
-          <p class="text-lg text-gray-700 mb-6">
-            Confidence you are safe from cancer:
-            <span class="font-bold text-green-500">
-              {{ ((1 - prob) * 100) | round(2) }}%
-            </span>
-          </p>
+        <p class="text-lg text-gray-700 mb-6">
+          Confidence you are safe from cancer:
+          <span class="font-bold text-green-500">{{ prob }}</span>
+        </p>
         {% endif %}
 
-        <!-- Suggestion or Additional Info -->
         <p class="text-sm text-gray-500 mb-6 leading-relaxed">
-          * This result is not a medical diagnosis. Please consult a healthcare professional
-          for accurate assessment. If in doubt, get a second opinion.
+          * This result is not a medical diagnosis. Please consult a healthcare professional for accurate assessment.
         </p>
 
-        <!-- Action Buttons -->
-        <div class="flex flex-col space-y-3">
-          <a 
-            href="/" 
-            class="bg-skinguardian text-white py-2 rounded font-semibold 
-                   hover:bg-blue-500 transition"
-          >
+        <!-- Buttons -->
+        <div class="flex flex-col space-y-3 relative z-10">
+          <!-- Interpret -->
+          <a href="{{ url_for('interpret', upload_fn=upload_fn) }}"
+             onclick="showLoadingSpinner(event)"
+             class="bg-skinguardian text-white py-2 rounded font-semibold hover:bg-yellow-600 transition">
+            Interpret Explanation
+          </a>
+
+          <!-- Analyze Again as plain text -->
+          <a href="/" class="text-sm hover:underline">
             Analyze Another Image
           </a>
-          <a 
-            href="/about"
-            class="text-skinguardian hover:underline font-semibold"
-          >
+
+          <!-- Learn more -->
+          <a href="/about" class="text-skinguardian hover:underline font-semibold">
             Learn More About SkinGuardian
           </a>
         </div>
@@ -138,11 +98,32 @@
     </div>
   </main>
 
+  <!-- Spinner Overlay -->
+  <div id="spinner-overlay"
+       class="hidden fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center">
+    <div class="text-yellow-500 text-center">
+      <svg class="animate-spin h-10 w-10 mx-auto mb-2" xmlns="http://www.w3.org/2000/svg"
+           fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10"
+                stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor"
+              d="M4 12a8 8 0 018-8v8H4z"></path>
+      </svg>
+      <span class="font-medium text-white">Analyzing...</span>
+    </div>
+  </div>
+
   <!-- Footer -->
-  <footer class="bg-white shadow py-6 mt-10">
+  <footer class="bg-white shadow py-6 mt-10 z-10">
     <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
       &copy; {{ year|default("2025") }} {{ brand_name }}. All rights reserved.
     </div>
   </footer>
+
+  <script>
+    function showLoadingSpinner(event) {
+      document.getElementById('spinner-overlay').classList.remove('hidden');
+    }
+  </script>
 </body>
 </html>
